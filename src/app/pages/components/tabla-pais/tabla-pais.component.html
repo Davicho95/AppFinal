@@ -1,0 +1,20 @@
+<table class="table table-cover animate__animated  animate__zoomIn" *ngIf="paises.length > 0">
+    <thead>
+        <tr>
+            <th> # </th>
+            <th> Bandera </th>
+            <th> País </th>
+            <th> Población </th>
+            <th>  </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pais of paises; let i = index;">
+            <th>{{i+1}}</th>
+            <th><img [src]="pais.flags.png" alt="" class="w100"></th>
+            <th>{{pais.capital}}-{{pais.name.common}}</th>
+            <th>{{pais.population | number}}</th>
+            <th><a [routerLink]="['/pais',pais.altSpellings[0]]">Ver Pais</a></th>
+        </tr>
+    </tbody>
+</table>

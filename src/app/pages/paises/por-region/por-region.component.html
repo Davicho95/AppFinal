@@ -1,0 +1,47 @@
+<h2>Buscar por Región o País: <small>{{regionActiva | titlecase}}</small></h2>
+<hr>
+<!-- [ngClass]="{
+    'btn-primary': region === regionActiva,
+    'btn-outline-primary': region != regionActiva
+}" -->
+
+<div class="row pb-3">
+    <div class="col">
+        <app-buscar-pais (onEnter)="Buscar( $event )"
+                         (onDebounce)="sugerencias( $event )"
+                         placeholder="Buscar Pais..."></app-buscar-pais>
+        
+    </div>
+</div>
+<ul *ngIf="mostrarSugerencias"
+    class="list-group">
+    <li *ngFor="let pais of paisesSugeridos" 
+         class="list-group-item list-group-item-action">
+         <a [routerLink]="['/pais',pais.altSpellings[0]]" class="nav-link">{{pais.name.common}}</a>
+         
+        
+    </li>
+    <!-- <li class="list-group-item list-group-item-action"
+        (click)="buscarSugerido(termino)">
+         <a class="nav-link">Buscar: {{termino}}</a>
+    </li> -->
+</ul>
+<hr>
+<div class="alert alert-danger" *ngIf="error">
+    No se encontró ninguna coinicidencia con el término <strong>{{termino}}</strong>
+</div>
+<div class="row">
+    <div class="col">
+        <h5>Seleccione una región</h5>
+        <button *ngFor="let region of regiones"
+                [class]="getClaseCSS(region)"                
+                (click)="activarRegion(region)">
+            {{region | titlecase}}
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col" *ngIf="!error">
+        <app-tabla-pais [paises]="paises"></app-tabla-pais>
+    </div>
+</div>
